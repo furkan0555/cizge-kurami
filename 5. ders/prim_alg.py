@@ -11,24 +11,24 @@ Biz min-heap ile yapiyoruz
 import heapq
 
 def prim_mst(graph, start_node):
-    T = [] # MST kenarları burda duracak
+    T = [] # MST
     S = set([start_node])# ziyaret edilenler kümesi
     Q = [] # min-heap
     
-    for neighbor, weight in graph[start_node]:
-        heapq.heappush(Q, (weight, start_node, neighbor)) # neighbor hedef düğüm
+    for neighbor, weight in graph[start_node]: # hedef düğüm neighbor değişkenine, aradaki yol ise wight değişkenine atanır
+        heapq.heappush(Q, (weight, start_node, neighbor)) # heapq listeyi sıralarken ilk elemana bakar, o yüzden ağırlık başta
     
     while Q:
-        weight, u, v = heapq.heappop(Q)
-        if v in S:
+        weight, u, v = heapq.heappop(Q) # ağırlık, kaynak düğüm, hedef düğüm
+        if v in S: # s zaten ziyaret edildiyse:
             continue # eğer ziyaret edildiyse atla
         T.append((u, v, weight)) # kenar güvenli, mst'ye ekle
-        S.add(v) # ziyaret edilenlere ekle
+        S.add(v) # ziyaret edilenlere v eklenmesinin sebebi döngü oluşmamasını sağlamak, yoksa bir düğüme 2 farklı yol oluşur
         
-        for x, edge_weight in graph[v]:
-            if x not in S:
+        for x, edge_weight in graph[v]: # ulaştığımız düğümden yeni noktalara ulaşma 
+            if x not in S: 
                 heapq.heappush(Q, (edge_weight, v, x)) # henüz ziyaret edilmemiş komşuları kuyruğa ekle
-    return T
+    return T 
 
 
 ornek_graf = {
