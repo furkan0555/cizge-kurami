@@ -5,21 +5,28 @@ bağli, ağirlikli ve yönsüz bir grafta MST bulmak için kullamilan açgözlü
 Zaman karmaşikliği : min-heap -> O(ElogV) "E kenar V düğüm" / fibionacci-heap -> O(E + VlogV)
 Biz min-heap ile yapiyoruz
 """
+
+
+
+
+
 # u = kaynak düğüm / v = hedef düğüm / x = yeni komşular
 
 
+
 import heapq
+
 
 def prim_mst(graph, start_node):
     T = [] # MST
     S = set([start_node])# ziyaret edilenler kümesi
     Q = [] # min-heap
     
-    for neighbor, weight in graph[start_node]: # hedef düğüm neighbor değişkenine, aradaki yol ise wight değişkenine atanır
-        heapq.heappush(Q, (weight, start_node, neighbor)) # heapq listeyi sıralarken ilk elemana bakar, o yüzden ağırlık başta
+    for neighbor, weight in graph[start_node]: # hedef düğüm neighbor değişkenine, aradaki yol ise weight değişkenine atanır
+        heapq.heappush(Q, (weight,start_node, neighbor)) # heapq listeyi sıralarken ilk elemana bakar, o yüzden ağırlık başta
     
     while Q:
-        weight, u, v = heapq.heappop(Q) # ağırlık, kaynak düğüm, hedef düğüm
+        weight, u, v = heapq.heappop(Q) # ağırlık, kaynak düğüm, hedef düğüm 
         if v in S: # s zaten ziyaret edildiyse:
             continue # eğer ziyaret edildiyse atla
         T.append((u, v, weight)) # kenar güvenli, mst'ye ekle
@@ -28,7 +35,7 @@ def prim_mst(graph, start_node):
         for x, edge_weight in graph[v]: # ulaştığımız düğümden yeni noktalara ulaşma 
             if x not in S: 
                 heapq.heappush(Q, (edge_weight, v, x)) # henüz ziyaret edilmemiş komşuları kuyruğa ekle
-    return T 
+    return T
 
 
 ornek_graf = {
