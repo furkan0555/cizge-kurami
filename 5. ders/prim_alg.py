@@ -5,14 +5,7 @@ bağli, ağirlikli ve yönsüz bir grafta MST bulmak için kullamilan açgözlü
 Zaman karmaşikliği : min-heap -> O(ElogV) "E kenar V düğüm" / fibionacci-heap -> O(E + VlogV)
 Biz min-heap ile yapiyoruz
 """
-
-
-
-
-
 # u = kaynak düğüm / v = hedef düğüm / x = yeni komşular
-
-
 
 import heapq
 
