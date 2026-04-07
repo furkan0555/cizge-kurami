@@ -30,7 +30,6 @@ def prim_mst(graph, start_node):
                 heapq.heappush(Q, (edge_weight, v, x)) # henüz ziyaret edilmemiş komşuları kuyruğa ekle
     return T
 
-
 ornek_graf = {
     'A': [('B', 4), ('H', 8)],
     'B': [('A', 4), ('C', 8), ('H', 11)],

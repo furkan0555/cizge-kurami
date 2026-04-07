@@ -4,7 +4,7 @@
 ağirlikli graflarda en kisa yol problemini çözen bir algoritmadir
 açgözlü bir yaklaşim benimser
 kenar ağirliklari negatif olmamalidir
-zaman karmaşikliği: dizi ile = O(v^2) / priority queue ile = O(E + VlogV)
+zaman karmaşikliği: dizi ile = O(v^2) / priority queue ile = O(ElogV)
 seyrek graflar için çok daha verimlidir
 """
 
