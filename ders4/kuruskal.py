@@ -6,48 +6,44 @@ başlangiç düğümü yoktur
 zaman karmaşikliği : O(ElogE) veya O(ElogV)
 """
 
-class DisjointSet:
-    def __init__(self, vertices):
-        self.parent = {} # her kökün ebeveynini tutacağımız sözlük yapısı
-        self.rank = {} # kümelerin derinliğini tutacağımız yapı
-        
-        for v in vertices:
-            self.parent[v] = v # başlangıçta her kümenin ebeveyni kendisidir
-            self.rank[v] = 0 # başlangıçta her kümenin derinliği sıfırdır
-    
-    def find_set(self, item): # bu method hangi düğümün hangi köke ait olduğunu bulur
-        if self.parent[item] == item: #eğer bir düğüm kendisinin ebeveyni ise; o düğüm temsici köktür
-            return item 
-        else: # eğer ebeveyni kendisi değilse asıl köke ulaşana kadar yukarı çıkmamız gerekir
-            self.parent[item] = self.find_set(self.parent[item]) # özyinelemeli olarak asıl kökü bulur ve o an aranan düğümü en üstteki köke bağlar
-            return self.parent[item] # bulunan nihai kökü döndürür
-        
-    def union(self, set1, set2): # iki farklı düğümün bulunduğu kümeleri birleştirir
-        root1 = self.find_set(set1) 
-        root2 = self.find_set(set2)
-        
-        if root1 != root2:
-            if self.rank[root1] > self.rank[root2]:
-                self.parent[root2] = root1
-            elif self.rank[root1] < self.rank[root2]:
-                self.parent[root1] = root2
-            else:
-                self.parent[root2] = root1
-                self.rank[root1] += 1
 
-def kruskal_mst(vertices, edges):
-    mst_edges = []
+def kruskal_mst(dugumler, kenarlar):
+    mst = []
+    parent = {}
+    rank = {}
     
-    ds = DisjointSet(vertices)
+    for v in dugumler:
+        parent[v] = v
+        rank[v] = 0
+        
+    def find_set(item):
+        if parent[item] == item:
+            return item
+        else:
+            parent[item] = find_set(parent[item])
+            return parent[item]
     
-    sorted_edges = sorted(edges)
+    def union(set1, set2):
+        root1 = find_set(set1)
+        root2 = find_set(set2)
+        
+        if rank[root1] > rank[root2]:
+            parent[root2] = root1
+        elif rank[root1] < rank[root2]:
+            parent[root1] = root2
+        else:
+            parent[root2] = root1
+            rank[root1] += 1
+            
+    sorted_edges = sorted(kenarlar)
     
     for weight, u, v in sorted_edges:
-        if ds.find_set(u) != ds.find_set(v):
-            mst_edges.append((u, v, weight))
-            ds.union(u, v)
-    
-    return mst_edges
+        if find_set(u) != find_set(v):
+            mst.append((u, v, weight))
+            union(u, v)
+            
+        
+    return mst
 
 dugumler = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']
 
